@@ -7,6 +7,7 @@ import {ListPageComponent} from "./components/list-page/list-page.component";
     standalone: true,
     imports: [
         RouterOutlet,
+        ListPageComponent,
     ],
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.less",
