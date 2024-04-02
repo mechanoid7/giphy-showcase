@@ -1,13 +1,13 @@
 import {Component} from "@angular/core";
 import {RouterOutlet} from "@angular/router";
-import {ListPageComponent} from "./components/list-page/list-page.component";
+import {MainPageComponent} from "./components/main-page/main-page.component";
 
 @Component({
     selector: "app-root",
     standalone: true,
     imports: [
         RouterOutlet,
-        ListPageComponent,
+        MainPageComponent,
     ],
     templateUrl: "./app.component.html",
     styleUrl: "./app.component.less",
