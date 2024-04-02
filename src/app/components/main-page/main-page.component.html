@@ -1,15 +1,27 @@
 <div class="main-page__header">
-    <mat-form-field class="example-form-field">
-        <mat-label>Search</mat-label>
-        <input matInput type="text" [formControl]="searchControl">
-        @if (searchControl.value) {
-            <button matSuffix mat-icon-button aria-label="Clear"
-                    (click)="searchControl.setValue('')"
-            >
-                <mat-icon>close</mat-icon>
-            </button>
-        }
-    </mat-form-field>
+    <div class="main-page__controls">
+        <mat-form-field class="main-page__search-field">
+            <mat-label>Search</mat-label>
+            <input matInput type="text" [formControl]="searchControl">
+            @if (searchControl.value) {
+                <button matSuffix mat-icon-button aria-label="Clear"
+                        (click)="searchControl.setValue('')"
+                >
+                    <mat-icon>close</mat-icon>
+                </button>
+            }
+        </mat-form-field>
+
+        <mat-form-field>
+            <mat-label>Image type</mat-label>
+            <mat-select>
+                @for (type of imageTypes; track type) {
+                    <mat-option [value]="type.value">{{type.viewValue}}</mat-option>
+                }
+            </mat-select>
+        </mat-form-field>
+    </div>
+
 </div>
 
 <div  class="main-page__content">

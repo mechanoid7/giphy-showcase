@@ -15,6 +15,12 @@ import {
 } from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
+import {
+    MatOption,
+    MatSelect,
+} from "@angular/material/select";
+import {GiphyContentType} from "../../models/giphy.model";
+import {ImageType} from "./main-page.model";
 
 @Component({
     selector: "app-main-page",
@@ -28,12 +34,18 @@ import {MatInput} from "@angular/material/input";
         MatLabel,
         MatSuffix,
         ReactiveFormsModule,
+        MatSelect,
+        MatOption,
     ],
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",
     changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class MainPageComponent {
-    public searchControl= new FormControl<string>("");
+    public searchControl = new FormControl<string>("");
+    public imageTypes: ImageType[] = [
+        {value: GiphyContentType.GIFS, viewValue: "Gif"},
+        {value: GiphyContentType.STICKERS, viewValue: "Sticker"},
+    ];
 
 }
