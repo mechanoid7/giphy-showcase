@@ -1,3 +1,4 @@
+import {HttpClient} from "@angular/common/http";
 import {Component} from "@angular/core";
 import {RouterOutlet} from "@angular/router";
 import {MainPageComponent} from "./components/main-page/main-page.component";

@@ -20,6 +20,7 @@ import {
     MatSelect,
 } from "@angular/material/select";
 import {GiphyContentType} from "../../models/giphy.model";
+import {GiphyService} from "../../services/giphy.service";
 import {ImageType} from "./main-page.model";
 
 @Component({
@@ -40,6 +41,7 @@ import {ImageType} from "./main-page.model";
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",
     changeDetection: ChangeDetectionStrategy.OnPush,
+    providers: [GiphyService],
 })
 export class MainPageComponent {
     public searchControl = new FormControl<string>("");
@@ -48,4 +50,12 @@ export class MainPageComponent {
         {value: GiphyContentType.STICKERS, viewValue: "Sticker"},
     ];
 
+    constructor(private giphyService: GiphyService) {
+    }
+
+    loadImgs() {
+        this.giphyService.getTrendingGifs(1).subscribe(val => {
+            console.log(">>> result: ", val);
+        })
+    }
 }
