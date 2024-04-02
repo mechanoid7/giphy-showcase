@@ -1,8 +1,10 @@
-<div class="main-page__header">
+<div *ngIf="state$ | async as state" class="main-page__header">
     <div class="main-page__controls">
         <mat-form-field class="main-page__search-field">
             <mat-label>Search</mat-label>
-            <input matInput type="text" [formControl]="searchControl">
+            <input matInput type="text"
+                   [formControl]="searchControl"
+            >
             @if (searchControl.value) {
                 <button matSuffix mat-icon-button aria-label="Clear"
                         (click)="searchControl.setValue('')"
@@ -14,9 +16,11 @@
 
         <mat-form-field>
             <mat-label>Image type</mat-label>
-            <mat-select>
+            <mat-select [value]="state.giphyContentType"
+                        (selectionChange)="selectGiphyContentType($event.value)"
+            >
                 @for (type of imageTypes; track type) {
-                    <mat-option [value]="type.value">{{type.viewValue}}</mat-option>
+                    <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
                 }
             </mat-select>
         </mat-form-field>
@@ -24,7 +28,7 @@
 
 </div>
 
-<div  class="main-page__content">
+<div class="main-page__content">
     <button (click)="loadImgs()">load</button>
-    <div  class="main-page__content-fake"></div>
+    <div class="main-page__content-fake"></div>
 </div>

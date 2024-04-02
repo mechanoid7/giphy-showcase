@@ -30,20 +30,20 @@ const initValues: Partial<State> = {
 export class MainPageState extends RxState<State> {
     constructor(giphyService: GiphyService) {
         super();
+        this.set(initValues);
 
         this.connect("images", combineLatest([
-                this.select("searchValue").pipe(debounceTime(1000)),
+                this.select("searchValue"),
                 this.select("giphyContentType"),
                 this.select("page"),
             ]).pipe(
-                switchMap(([searchValue, giphyContentType, page]) => {
-                    // todo: add search, type handling
-                    return giphyService.getTrendingGifs(page);
-                }),
-                map(transformGiphyApiToImages),
+                map(() => ([])), //tmp
+                // switchMap(([searchValue, giphyContentType, page]) => {
+                //     // todo: add search, type handling
+                //     return giphyService.getTrendingGifs(page);
+                // }),
+                // map(transformGiphyApiToImages),
             ));
 
-        this.set(initValues);
     }
-
 }
