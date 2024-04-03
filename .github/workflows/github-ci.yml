@@ -16,3 +16,7 @@ jobs:
                 uses: JamesIves/github-pages-deploy-action@v4
                 with:
                     folder: dist/giphy-showcase/browser
+
+permissions:
+    contents: write
+    
