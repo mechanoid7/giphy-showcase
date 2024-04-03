@@ -25,6 +25,7 @@ import {
 } from "@angular/material/form-field";
 import {MatIcon} from "@angular/material/icon";
 import {MatInput} from "@angular/material/input";
+import {MatProgressSpinner} from "@angular/material/progress-spinner";
 import {
     MatOption,
     MatSelect,
@@ -46,17 +47,18 @@ import {MainPageState} from "./main-page.state";
     imports: [
         AsyncPipe,
         FormsModule,
+        GiphyListComponent,
         MatFormField,
         MatIcon,
         MatIconButton,
         MatInput,
         MatLabel,
         MatOption,
+        MatProgressSpinner,
         MatSelect,
         MatSuffix,
         NgIf,
         ReactiveFormsModule,
-        GiphyListComponent,
     ],
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",

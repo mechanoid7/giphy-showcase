@@ -19,12 +19,14 @@ interface State {
     giphyContentType: GiphyContentType,
     page: number,
     images: GiphyImage[],
+    loading?: boolean,
 }
 
 const initValues: Partial<State> = {
     searchValue: "",
     giphyContentType: GiphyContentType.GIFS,
     page: 0,
+    loading: false,
 };
 
 @Injectable()

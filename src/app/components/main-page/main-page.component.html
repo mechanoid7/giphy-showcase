@@ -31,7 +31,12 @@
     <div #imagesContainer
          class="main-page__content"
     >
-        <button (click)="loadImgs()">load</button>
+        <div class="main-page__loader-container">
+            <mat-spinner *ngIf="state.loading"
+                         class="main-page__loader"
+            ></mat-spinner>
+        </div>
+<!--        <button (click)="loadImgs()">load</button>-->
         <app-giphy-list *ngIf="width$ | async as width"
                         [images]="state.images"
                         [width]="width"
