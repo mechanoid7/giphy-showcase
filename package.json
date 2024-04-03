@@ -21,6 +21,8 @@
         "@angular/platform-browser-dynamic": "^17.3.0",
         "@angular/router": "^17.3.0",
         "@rx-angular/state": "^17.0.1",
+        "@types/lodash": "^4.17.0",
+        "lodash": "^4.17.21",
         "rxjs": "~7.8.0",
         "tslib": "^2.3.0",
         "zone.js": "~0.14.3"

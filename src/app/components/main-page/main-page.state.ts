@@ -5,6 +5,7 @@ import {
     debounceTime,
     map,
     switchMap,
+    tap,
 } from "rxjs";
 import {
     GiphyContentType,
@@ -33,17 +34,20 @@ export class MainPageState extends RxState<State> {
         this.set(initValues);
 
         this.connect("images", combineLatest([
-                this.select("searchValue"),
-                this.select("giphyContentType"),
-                this.select("page"),
-            ]).pipe(
-                map(() => ([])), //tmp
-                // switchMap(([searchValue, giphyContentType, page]) => {
-                //     // todo: add search, type handling
-                //     return giphyService.getTrendingGifs(page);
-                // }),
-                // map(transformGiphyApiToImages),
-            ));
+            this.select("searchValue"),
+            this.select("giphyContentType"),
+            this.select("page"),
+        ]).pipe(
+            tap(() => {
+                console.log(">>> LOAD DATA");
+            }),
+            map(() => ([])), //tmp
+            // switchMap(([searchValue, giphyContentType, page]) => {
+            //     // todo: add search, type handling
+            //     return giphyService.getTrendingGifs(page);
+            // }),
+            // map(transformGiphyApiToImages),
+        ));
 
     }
 }

@@ -3,10 +3,13 @@ import {
     NgIf,
 } from "@angular/common";
 import {
+    AfterViewInit,
     ChangeDetectionStrategy,
     Component,
     DestroyRef,
+    ElementRef,
     OnInit,
+    ViewChild,
 } from "@angular/core";
 import {takeUntilDestroyed} from "@angular/core/rxjs-interop";
 import {
@@ -26,9 +29,10 @@ import {
     MatOption,
     MatSelect,
 } from "@angular/material/select";
+import {debounce} from "lodash";
 import {
+    BehaviorSubject,
     debounceTime,
-    tap,
 } from "rxjs";
 import {GiphyContentType} from "../../models/giphy.model";
 import {GiphyService} from "../../services/giphy.service";
@@ -39,18 +43,18 @@ import {MainPageState} from "./main-page.state";
     selector: "app-main-page",
     standalone: true,
     imports: [
+        AsyncPipe,
         FormsModule,
         MatFormField,
         MatIcon,
         MatIconButton,
         MatInput,
         MatLabel,
-        MatSuffix,
-        ReactiveFormsModule,
-        MatSelect,
         MatOption,
-        AsyncPipe,
+        MatSelect,
+        MatSuffix,
         NgIf,
+        ReactiveFormsModule,
     ],
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",
@@ -60,19 +64,28 @@ import {MainPageState} from "./main-page.state";
         MainPageState,
     ],
 })
-export class MainPageComponent implements OnInit {
+export class MainPageComponent implements OnInit, AfterViewInit {
     public searchControl = new FormControl<string>("");
     public imageTypes: ImageType[] = [
         {value: GiphyContentType.GIFS, viewValue: "Gif"},
         {value: GiphyContentType.STICKERS, viewValue: "Sticker"},
     ];
-    public state$ = this.pageState.select().pipe(tap(value => {
-        console.log(">>> state: ", value);
-    }));
+    public state$ = this.pageState.select();
+    public width$ = new BehaviorSubject<number | undefined>(undefined);
+    private imagesContainerElement!: ElementRef<HTMLElement>;
 
-    constructor(private giphyService: GiphyService, public pageState: MainPageState, private destroy$: DestroyRef) {
-
+    constructor(
+        private giphyService: GiphyService,
+        public pageState: MainPageState,
+        private destroy$: DestroyRef,
+    ) {
     }
+
+    @ViewChild("imagesContainer", {read: ElementRef})
+    private set imagesContainer(element: ElementRef<HTMLElement>) {
+        this.imagesContainerElement = element;
+        this.width$.next(element.nativeElement.offsetWidth);
+    };
 
     public ngOnInit(): void {
         this.searchControl.valueChanges
@@ -80,7 +93,17 @@ export class MainPageComponent implements OnInit {
                 takeUntilDestroyed(this.destroy$),
                 debounceTime(850),
             )
-            .subscribe(searchValue => this.pageState.set({searchValue: searchValue || ""}));
+            .subscribe(searchValue => {
+                this.pageState.set({searchValue: searchValue || ""});
+                console.log(">>> set search");
+            });
+    }
+
+    public ngAfterViewInit(): void {
+        window.addEventListener(
+            "resize",
+            debounce(() => this.width$.next(this.imagesContainerElement.nativeElement.offsetWidth), 500),
+        );
     }
 
     loadImgs() {
@@ -91,5 +114,6 @@ export class MainPageComponent implements OnInit {
 
     public selectGiphyContentType(value: GiphyContentType) {
         this.pageState.set({giphyContentType: value});
+        console.log(">>> set giphyContentType");
     }
 }
