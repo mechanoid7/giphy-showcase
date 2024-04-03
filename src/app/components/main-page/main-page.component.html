@@ -46,7 +46,7 @@
         >
             <mat-spinner class="main-page__loader"></mat-spinner>
         </div>
-        <app-giphy-list *ngIf="width$ | async as width"
+        <app-giphy-list *ngIf="state.images && width$ | async as width"
                         [images]="state.images"
                         [width]="width"
                         (loadNext)="loadNext()"

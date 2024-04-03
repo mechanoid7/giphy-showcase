@@ -60,8 +60,6 @@ export class MainPageState extends RxState<State> {
                     appendList: page !== 0,
                 }))),
             ),
-            tap((val) => console.log(">>> LOADING 2", val)),
-
             tap(({apiModel}) => this.set({total: getTotalItems(apiModel)})),
             map(({apiModel, appendList}) =>
                 appendList

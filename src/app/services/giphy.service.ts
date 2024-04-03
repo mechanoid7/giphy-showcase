@@ -11,7 +11,7 @@ import {RestApiBaseServiceService} from "./rest-api-base-service.service";
 // FIXME: should be stored in env var
 const api_key = "V4efOepL9AOSQiLijBUwgg95IsGPlRG4";
 
-@Injectable()
+@Injectable({providedIn: "root"})
 export class GiphyService {
     constructor(private restService: RestApiBaseServiceService) {
     }
