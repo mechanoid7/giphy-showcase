@@ -16,20 +16,24 @@ const DEFAULT_GAP = 10;
 })
 export class SplitImageListPipe implements PipeTransform{
     public transform(images: GiphyImage[], width: number, height: number): GiphyImage[][] {
-        const getRelativeWidth = (size: GiphyImageSize) => height * Number(size.width) / Number(size.height);
+        height = height - DEFAULT_GAP;
+        const getRelativeWidth = (size: GiphyImageSize): number => height * Number(size.width) / Number(size.height);
         const result: GiphyImage[][] = [];
         let currentSubArray: GiphyImage[] = [];
         let currentWidth = 0;
 
         for (const item of images) {
             const actualWidth = getRelativeWidth(item.sizes.downsized) + DEFAULT_GAP;
-            if (currentWidth + Number(actualWidth) <= width) {
+            item.sizes.downsized.height = height;
+            item.sizes.downsized.width = actualWidth;
+
+            if (currentWidth + actualWidth <= width) {
                 currentSubArray.push(item);
-                currentWidth += Number(actualWidth);
+                currentWidth += actualWidth;
             } else {
                 result.push(currentSubArray);
                 currentSubArray = [item];
-                currentWidth = Number(actualWidth);
+                currentWidth = actualWidth;
             }
         }
 

@@ -19,10 +19,10 @@ export class GiphyEndpoints {
 }
 
 export interface GiphyImageSize {
-    height: string;
-    size: string;
+    height: number;
+    size: number;
     url: string;
-    width: string;
+    width: number;
 }
 
 export interface GiphyImage {
