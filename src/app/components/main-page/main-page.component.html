@@ -49,7 +49,7 @@
         <app-giphy-list *ngIf="state.images && width$ | async as width"
                         [images]="state.images"
                         [width]="width"
-                        (loadNext)="loadNext()"
+                        (loadNext)="state.images.length < state.total && loadNext()"
         ></app-giphy-list>
     </div>
 </ng-container>
