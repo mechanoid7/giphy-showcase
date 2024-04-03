@@ -13,7 +13,7 @@ jobs:
             -   name: Build app
                 run: npm run build
             -   name: All things angular
-                uses: AhsanAyaz/angular-deploy-gh-pages-actions@4
+                uses: AhsanAyaz/angular-deploy-gh-pages-actions@v4
                 with:
                     github_access_token: ${{ secrets.GITHUB_TOKEN }}
                     deploy_branch: master
