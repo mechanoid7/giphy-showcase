@@ -49,6 +49,7 @@ interface Datum {
     is_anonymous?: number;
     is_featured?: number;
     is_realtime?: number;
+
     [p: string]: any;
 }
 
@@ -74,6 +75,7 @@ interface User {
     instagram_url: string;
     website_url: string;
     is_verified: boolean;
+
     [p: string]: any;
 }
 
@@ -145,7 +147,7 @@ interface BaseImageModel {
     url: string;
 }
 
-interface Original extends BaseImageModel{
+interface Original extends BaseImageModel {
     mp4_size: string;
     mp4: string;
     webp_size: string;

@@ -37,7 +37,6 @@ import {
     debounceTime,
 } from "rxjs";
 import {GiphyContentType} from "../../models/giphy.model";
-import {GiphyService} from "../../services/giphy.service";
 import {GiphyListComponent} from "../giphy-list/giphy-list.component";
 import {ImageType} from "./main-page.model";
 import {MainPageState} from "./main-page.state";
@@ -65,10 +64,7 @@ import {MainPageState} from "./main-page.state";
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",
     changeDetection: ChangeDetectionStrategy.OnPush,
-    providers: [
-        GiphyService, //todo: rm
-        MainPageState,
-    ],
+    providers: [MainPageState],
 })
 export class MainPageComponent implements OnInit, AfterViewInit {
     public searchControl = new FormControl<string>("");
@@ -81,7 +77,6 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     private imagesContainerElement!: ElementRef<HTMLElement>;
 
     constructor(
-        private giphyService: GiphyService,
         public pageState: MainPageState,
         private destroy$: DestroyRef,
     ) {
@@ -99,10 +94,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
                 takeUntilDestroyed(this.destroy$),
                 debounceTime(850),
             )
-            .subscribe(searchValue => {
-                this.pageState.set({searchValue: searchValue || ""});
-                console.log(">>> set search"); // TODO: clean
-            });
+            .subscribe(searchValue => this.pageState.set({searchValue: searchValue || ""}));
     }
 
     public ngAfterViewInit(): void {
@@ -112,15 +104,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         );
     }
 
-    // loadImgs() { // TODO: clean
-    //     this.giphyService.getTrendingImages(1).subscribe(val => {
-    //         console.log(">>> result: ", val);
-    //     });
-    // }
-
     public selectGiphyContentType(value: GiphyContentType) {
         this.pageState.set({giphyContentType: value});
-        console.log(">>> set giphyContentType"); // TODO: clean
     }
 
     public loadNext(): void {

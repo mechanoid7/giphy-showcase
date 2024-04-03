@@ -1,5 +1,4 @@
 import {
-    Directive,
     Pipe,
     PipeTransform,
 } from "@angular/core";
@@ -14,7 +13,7 @@ const DEFAULT_GAP = 10;
     name: "appSplitImageList",
     standalone: true,
 })
-export class SplitImageListPipe implements PipeTransform{
+export class SplitImageListPipe implements PipeTransform {
     public transform(images: GiphyImage[], width: number, height: number): GiphyImage[][] {
         height = height - DEFAULT_GAP;
         const getRelativeWidth = (size: GiphyImageSize): number => height * Number(size.width) / Number(size.height);
@@ -23,17 +22,18 @@ export class SplitImageListPipe implements PipeTransform{
         let currentWidth = 0;
 
         for (const item of images) {
-            const actualWidth = getRelativeWidth(item.sizes.downsized) + DEFAULT_GAP;
+            const actualWidth = getRelativeWidth(item.sizes.downsized);
             item.sizes.downsized.height = height;
             item.sizes.downsized.width = actualWidth;
+            const offsetWidht = actualWidth + DEFAULT_GAP;
 
             if (currentWidth + actualWidth <= width) {
                 currentSubArray.push(item);
-                currentWidth += actualWidth;
+                currentWidth += offsetWidht;
             } else {
                 result.push(currentSubArray);
                 currentSubArray = [item];
-                currentWidth = actualWidth;
+                currentWidth = offsetWidht;
             }
         }
 

@@ -9,8 +9,3 @@ export interface RestApiRequestOptions {
     params?: HttpParams;
     responseType?: "arraybuffer" | "blob" | "json" | "text";
 }
-
-export interface RestApiOptions {
-    urlParameters?: object;
-    request?: RestApiRequestOptions;
-}

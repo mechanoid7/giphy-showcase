@@ -28,7 +28,6 @@
                 </mat-form-field>
             </div>
 
-
             <mat-chip *ngIf="state.total as total"
                       class="main-page__total-chip"
                       color="accent"
@@ -47,7 +46,6 @@
         >
             <mat-spinner class="main-page__loader"></mat-spinner>
         </div>
-        <!--        <button (click)="loadImgs()">load</button>-->
         <app-giphy-list *ngIf="width$ | async as width"
                         [images]="state.images"
                         [width]="width"

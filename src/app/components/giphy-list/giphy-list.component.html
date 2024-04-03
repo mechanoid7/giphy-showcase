@@ -8,6 +8,7 @@
     >
         <div *ngFor="let image of imageRow"
              class="giphy-list__image"
+             [style.height]="image.sizes.downsized.height + 'px'"
              [style.width]="image.sizes.downsized.width + 'px'"
         >
             <mat-label class="giphy-list__image_title">{{ image.title }}</mat-label>

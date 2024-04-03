@@ -31,7 +31,7 @@ export class GiphyService {
         );
     }
 
-    public searchImages(page: number, type: GiphyContentType, query: string, count: number = 20): Observable<GiphyApiModel> {
+    public searchImages(page: number, type: GiphyContentType, query: string, count: number = 50): Observable<GiphyApiModel> {
         return this.restService.get(
             GiphyEndpoints.search(type),
             {
