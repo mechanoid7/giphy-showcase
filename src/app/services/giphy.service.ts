@@ -16,16 +16,31 @@ export class GiphyService {
     constructor(private restService: RestApiBaseServiceService) {
     }
 
-    public getTrendingGifs(page: number, count: number = 20): Observable<GiphyApiModel> {
+    public getTrendingImages(page: number, type: GiphyContentType, count: number = 50): Observable<GiphyApiModel> {
         return this.restService.get(
-            GiphyEndpoints.trending(GiphyContentType.GIFS),
+            GiphyEndpoints.trending(type),
             {
                 params: new HttpParams({
                     fromObject: {
                         limit: count,
                         api_key,
                         offset: page * count,
-                        // rating: undefined,
+                    },
+                }),
+            },
+        );
+    }
+
+    public searchImages(page: number, type: GiphyContentType, query: string, count: number = 20): Observable<GiphyApiModel> {
+        return this.restService.get(
+            GiphyEndpoints.search(type),
+            {
+                params: new HttpParams({
+                    fromObject: {
+                        limit: count,
+                        api_key,
+                        q: query,
+                        offset: page * count,
                     },
                 }),
             },

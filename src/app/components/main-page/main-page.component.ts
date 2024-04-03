@@ -112,11 +112,11 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         );
     }
 
-    loadImgs() { // TODO: clean
-        this.giphyService.getTrendingGifs(1).subscribe(val => {
-            console.log(">>> result: ", val);
-        });
-    }
+    // loadImgs() { // TODO: clean
+    //     this.giphyService.getTrendingImages(1).subscribe(val => {
+    //         console.log(">>> result: ", val);
+    //     });
+    // }
 
     public selectGiphyContentType(value: GiphyContentType) {
         this.pageState.set({giphyContentType: value});
