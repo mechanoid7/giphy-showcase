@@ -120,4 +120,8 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         this.pageState.set({giphyContentType: value});
         console.log(">>> set giphyContentType");
     }
+
+    public loadNext(): void {
+
+    }
 }

@@ -11,10 +11,11 @@
              [style.width]="image.sizes.downsized.width + 'px'"
         >
             <mat-label class="giphy-list__image_title">{{ image.title }}</mat-label>
-            <img class="giphy-list__image_content"
+            <img alt=""
+                 class="giphy-list__image_content"
                  loading="lazy"
-                 [alt]="image.title"
                  [src]="image.sizes.downsized.url"
+                 (error)="loadingImageError(image.title)"
             >
             <mat-label class="giphy-list__image_date">{{ image.uploadDate }}</mat-label>
         </div>
