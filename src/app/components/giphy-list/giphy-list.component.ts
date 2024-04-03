@@ -5,7 +5,9 @@ import {
 } from "@angular/cdk/scrolling";
 import {
     NgForOf,
+    NgIf,
     NgOptimizedImage,
+    NgTemplateOutlet,
 } from "@angular/common";
 import {
     ChangeDetectionStrategy,
@@ -13,6 +15,7 @@ import {
     EventEmitter,
     Input,
     Output,
+    ViewChild,
 } from "@angular/core";
 import {MatLabel} from "@angular/material/form-field";
 import {throttle} from "lodash";
@@ -32,7 +35,9 @@ const LOAD_OFFSET = ROW_HEIGHT * 1.5; //in px
         CdkVirtualScrollViewport,
         MatLabel,
         NgForOf,
+        NgIf,
         NgOptimizedImage,
+        NgTemplateOutlet,
         SplitImageListPipe,
     ],
     templateUrl: "./giphy-list.component.html",
@@ -43,7 +48,6 @@ export class GiphyListComponent {
     @Input({required: true}) public width!: number;
     @Input({required: true}) public images!: GiphyImage[];
     @Output() public loadNext = new EventEmitter<void>();
-
     public rowHeight = ROW_HEIGHT; // in px
     public viewportScrolled = throttle((event: Event) => {
         const target = event.target as HTMLElement;
@@ -51,6 +55,7 @@ export class GiphyListComponent {
 
         diff < LOAD_OFFSET && this.loadNext.emit();
     }, 1500);
+    @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
 
     constructor(private notificationService: NotificationService) {
     }

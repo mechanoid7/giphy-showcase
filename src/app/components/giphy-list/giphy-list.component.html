@@ -1,4 +1,5 @@
-<cdk-virtual-scroll-viewport class="giphy-list__scroll-viewport"
+<cdk-virtual-scroll-viewport *ngIf="images?.length else notFoundTemplate"
+                             class="giphy-list__scroll-viewport"
                              [itemSize]="rowHeight"
                              (scroll)="viewportScrolled($event)"
 >
@@ -11,14 +12,9 @@
              [style.height]="image.sizes.downsized.height + 'px'"
              [style.width]="image.sizes.downsized.width + 'px'"
         >
-            <mat-label class="giphy-list__image_title">{{ image.title }}</mat-label>
-            <img alt=""
-                 class="giphy-list__image_content"
-                 loading="lazy"
-                 [src]="image.sizes.downsized.url"
-                 (error)="loadingImageError(image.title)"
-            >
-            <mat-label class="giphy-list__image_date">{{ image.uploadDate }}</mat-label>
+            <ng-container [ngTemplateOutletContext]="{image}"
+                          [ngTemplateOutlet]="imageTemplate"
+            ></ng-container>
         </div>
     </div>
 </cdk-virtual-scroll-viewport>
@@ -26,5 +22,16 @@
 <ng-template #imageTemplate
              let-image="image"
 >
+    <mat-label class="giphy-list__image_title">{{ image.title }}</mat-label>
+    <img alt=""
+         class="giphy-list__image_content"
+         loading="lazy"
+         [src]="image.sizes.downsized.url"
+         (error)="loadingImageError(image.title)"
+    >
+    <mat-label class="giphy-list__image_date">{{ image.uploadDate }}</mat-label>
+</ng-template>
 
+<ng-template #notFoundTemplate>
+    <mat-label class="giphy-list__not-found">Images Not Found 😢</mat-label>
 </ng-template>
