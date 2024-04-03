@@ -12,5 +12,11 @@ jobs:
                 run: npm ci
             -   name: Build app
                 run: npm run build
-            -   name: Deploy to GitHub Pages
-                uses: actions/deploy-pages@v4
+            -   name: All things angular
+                uses: AhsanAyaz/angular-deploy-gh-pages-actions@4
+                with:
+                    github_access_token: ${{ secrets.GITHUB_TOKEN }}
+                    deploy_branch: master
+
+permissions:
+    contents: write
