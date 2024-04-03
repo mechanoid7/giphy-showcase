@@ -12,7 +12,7 @@ jobs:
                 run: npm ci
             -   name: Build app
                 run: npm run build:prod
-            -   name: All things angular
+            -   name: Deploy
                 uses: JamesIves/github-pages-deploy-action@v4
                 with:
                     folder: dist/giphy-showcase
