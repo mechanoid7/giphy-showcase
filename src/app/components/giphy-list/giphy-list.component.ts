@@ -55,9 +55,16 @@ export class GiphyListComponent {
 
         diff < LOAD_OFFSET && this.loadNext.emit();
     }, 1500);
-    @ViewChild(CdkVirtualScrollViewport) private viewport!: CdkVirtualScrollViewport;
+    public needLoadItems = true;
 
     constructor(private notificationService: NotificationService) {
+    }
+
+    @ViewChild(CdkVirtualScrollViewport)
+    public set virtualScroll(viewport: CdkVirtualScrollViewport) { // incrementally load items for large screen
+        this.needLoadItems
+        && viewport?.elementRef.nativeElement.offsetHeight > viewport.getDataLength() * ROW_HEIGHT
+        && this.loadNext.emit();
     }
 
     public loadingImageError(title: string) {
