@@ -1,36 +1,41 @@
-<div *ngIf="state$ | async as state" class="main-page__header">
-    <div class="main-page__controls">
-        <mat-form-field class="main-page__search-field">
-            <mat-label>Search</mat-label>
-            <input matInput type="text"
-                   [formControl]="searchControl"
-            >
-            @if (searchControl.value) {
-                <button matSuffix mat-icon-button aria-label="Clear"
-                        (click)="searchControl.setValue('')"
+<ng-container *ngIf="state$ | async as state">
+    <div class="main-page__header">
+        <div class="main-page__controls">
+            <mat-form-field class="main-page__search-field">
+                <mat-label>Search</mat-label>
+                <input matInput type="text"
+                       [formControl]="searchControl"
                 >
-                    <mat-icon>close</mat-icon>
-                </button>
-            }
-        </mat-form-field>
-
-        <mat-form-field>
-            <mat-label>Image type</mat-label>
-            <mat-select [value]="state.giphyContentType"
-                        (selectionChange)="selectGiphyContentType($event.value)"
-            >
-                @for (type of imageTypes; track type) {
-                    <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
+                @if (searchControl.value) {
+                    <button matSuffix mat-icon-button aria-label="Clear"
+                            (click)="searchControl.setValue('')"
+                    >
+                        <mat-icon>close</mat-icon>
+                    </button>
                 }
-            </mat-select>
-        </mat-form-field>
+            </mat-form-field>
+
+            <mat-form-field>
+                <mat-label>Image type</mat-label>
+                <mat-select [value]="state.giphyContentType"
+                            (selectionChange)="selectGiphyContentType($event.value)"
+                >
+                    @for (type of imageTypes; track type) {
+                        <mat-option [value]="type.value">{{ type.viewValue }}</mat-option>
+                    }
+                </mat-select>
+            </mat-form-field>
+        </div>
     </div>
 
-</div>
-
-<div #imagesContainer
-     class="main-page__content"
->
-    <button (click)="loadImgs()">load</button>
-    <div class="main-page__content-fake"></div>
-</div>
+    <div #imagesContainer
+         class="main-page__content"
+    >
+        <button (click)="loadImgs()">load</button>
+        <app-giphy-list *ngIf="width$ | async as width"
+                        [images]="state.images"
+                        [width]="width"
+        ></app-giphy-list>
+        <div class="main-page__content-fake"></div>
+    </div>
+</ng-container>

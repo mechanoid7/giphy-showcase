@@ -36,6 +36,7 @@ import {
 } from "rxjs";
 import {GiphyContentType} from "../../models/giphy.model";
 import {GiphyService} from "../../services/giphy.service";
+import {GiphyListComponent} from "../giphy-list/giphy-list.component";
 import {ImageType} from "./main-page.model";
 import {MainPageState} from "./main-page.state";
 
@@ -55,6 +56,7 @@ import {MainPageState} from "./main-page.state";
         MatSuffix,
         NgIf,
         ReactiveFormsModule,
+        GiphyListComponent,
     ],
     templateUrl: "./main-page.component.html",
     styleUrl: "./main-page.component.less",
@@ -102,7 +104,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
     public ngAfterViewInit(): void {
         window.addEventListener(
             "resize",
-            debounce(() => this.width$.next(this.imagesContainerElement.nativeElement.offsetWidth), 500),
+            debounce(() => this.width$.next(this.imagesContainerElement.nativeElement.offsetWidth), 300),
         );
     }
 

@@ -1,1 +1,3 @@
-<p>giphy-list works!</p>
+<div *ngFor="let imageRow of images | appSplitImageList : width"
+     class="giphy-list__image-row"
+></div>
