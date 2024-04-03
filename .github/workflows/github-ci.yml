@@ -15,7 +15,7 @@ jobs:
             -   name: All things angular
                 uses: JamesIves/github-pages-deploy-action@v4
                 with:
-                    folder: dist
+                    folder: dist/giphy-showcase/browser
 
 permissions:
     contents: write
