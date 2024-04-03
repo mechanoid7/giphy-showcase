@@ -15,6 +15,7 @@ import {
     Output,
 } from "@angular/core";
 import {MatLabel} from "@angular/material/form-field";
+import {throttle} from "lodash";
 import {GiphyImage} from "../../models/giphy.model";
 import {NotificationService} from "../../services/notification.service";
 import {SplitImageListPipe} from "./split-image-list.pipe";
@@ -29,10 +30,10 @@ const LOAD_OFFSET = ROW_HEIGHT * 1.5; //in px
         CdkFixedSizeVirtualScroll,
         CdkVirtualForOf,
         CdkVirtualScrollViewport,
-        SplitImageListPipe,
-        NgForOf,
         MatLabel,
+        NgForOf,
         NgOptimizedImage,
+        SplitImageListPipe,
     ],
     templateUrl: "./giphy-list.component.html",
     styleUrl: "./giphy-list.component.less",
@@ -44,18 +45,17 @@ export class GiphyListComponent {
     @Output() public loadNext = new EventEmitter<void>();
 
     public rowHeight = ROW_HEIGHT; // in px
+    public viewportScrolled = throttle((event: Event) => {
+        const target = event.target as HTMLElement;
+        const diff = Math.abs(target.scrollHeight - target.scrollTop - target.clientHeight);
+
+        diff < LOAD_OFFSET && this.loadNext.emit();
+    }, 1500);
 
     constructor(private notificationService: NotificationService) {
     }
 
-    public viewportScrolled(event: Event) {
-        const target = event.target as HTMLElement;
-
-        const diff = Math.abs(target.scrollHeight - target.scrollTop - target.clientHeight);
-        console.log(">>> LOAD: ", diff < LOAD_OFFSET);
-    }
-
-    loadingImageError(title: string) {
-        this.notificationService.error(`Can't load "${title}" image`)
+    public loadingImageError(title: string) {
+        this.notificationService.error(`Can't load "${title}" image`);
     }
 }

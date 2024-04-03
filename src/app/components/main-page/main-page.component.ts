@@ -99,7 +99,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
             )
             .subscribe(searchValue => {
                 this.pageState.set({searchValue: searchValue || ""});
-                console.log(">>> set search");
+                console.log(">>> set search"); // TODO: clean
             });
     }
 
@@ -110,7 +110,7 @@ export class MainPageComponent implements OnInit, AfterViewInit {
         );
     }
 
-    loadImgs() {
+    loadImgs() { // TODO: clean
         this.giphyService.getTrendingGifs(1).subscribe(val => {
             console.log(">>> result: ", val);
         });
@@ -118,10 +118,10 @@ export class MainPageComponent implements OnInit, AfterViewInit {
 
     public selectGiphyContentType(value: GiphyContentType) {
         this.pageState.set({giphyContentType: value});
-        console.log(">>> set giphyContentType");
+        console.log(">>> set giphyContentType"); // TODO: clean
     }
 
     public loadNext(): void {
-
+        this.pageState.loadNext();
     }
 }
