@@ -1,3 +1,26 @@
-<div *ngFor="let imageRow of images | appSplitImageList : width"
-     class="giphy-list__image-row"
-></div>
+<cdk-virtual-scroll-viewport class="giphy-list__scroll-viewport"
+                             [itemSize]="rowHeight"
+                             (scroll)="viewportScrolled($event)"
+>
+    <div *cdkVirtualFor="let imageRow of images | appSplitImageList : width : rowHeight"
+         class="giphy-list__image-row"
+         [style.height]="rowHeight+'px'"
+    >
+        <div *ngFor="let image of imageRow"
+             class="giphy-list__image"
+        >
+            <mat-label class="giphy-list__image_title">{{ image.title }}</mat-label>
+            <img class="giphy-list__image_content"
+                 [alt]="image.title"
+                 [src]="image.sizes.downsized.url"
+            >
+            <mat-label class="giphy-list__image_date">{{ image.uploadDate }}</mat-label>
+        </div>
+    </div>
+</cdk-virtual-scroll-viewport>
+
+<ng-template #imageTemplate
+             let-image="image"
+>
+
+</ng-template>

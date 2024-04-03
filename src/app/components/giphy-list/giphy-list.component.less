@@ -1,5 +1,54 @@
+@import "../../../assets/styles/colors";
+@import "../../../assets/styles/vars";
+
+@image-padding: 5px;
+
+:host {
+    height: 100%;
+    display: block;
+}
+
 .giphy-list {
     &__image-row {
-        height: 200px;
+        display: flex;
+        gap: @image-padding * 2;
+        justify-content: center;
+        padding: @image-padding 0;
+    }
+
+    &__image {
+        position: relative;
+
+        &_title {
+            background: @chip-background;
+            border-radius: @image-padding;
+            left: @image-padding;
+            padding: 0 @image-padding;
+            position: absolute;
+            top: @image-padding;
+        }
+
+        &_date {
+            background: @chip-background;
+            border-radius: @image-padding;
+            bottom: @image-padding;
+            padding: 0 @image-padding;
+            position: absolute;
+            right: @image-padding;
+        }
+
+        &_content {
+            border-radius: @image-padding * 2;
+        }
+
+        img {
+            height: 100%;
+            width: auto;
+        }
+    }
+
+    &__scroll-viewport {
+        height: 100%;
+        width: 100%;
     }
 }

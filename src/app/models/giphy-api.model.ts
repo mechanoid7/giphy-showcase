@@ -39,6 +39,17 @@ interface Datum {
     analytics_response_payload: string;
     analytics: Analytics;
     alt_text: string;
+    index_id?: number;
+    tags?: string[];
+    featured_tags?: string[];
+    user_tags?: string[];
+    is_hidden?: number;
+    is_removed?: number;
+    is_community?: number;
+    is_anonymous?: number;
+    is_featured?: number;
+    is_realtime?: number;
+    [p: string]: any;
 }
 
 interface Analytics {
@@ -52,6 +63,7 @@ interface Onload {
 }
 
 interface User {
+    id?: number;
     avatar_url: string;
     banner_image: string;
     banner_url: string;
@@ -62,34 +74,36 @@ interface User {
     instagram_url: string;
     website_url: string;
     is_verified: boolean;
+    [p: string]: any;
 }
 
 interface Images {
     original: Original;
-    downsized: Downsized;
-    downsized_large: Downsized;
-    downsized_medium: Downsized;
+    downsized: BaseImageModel;
+    downsized_large: BaseImageModel;
+    downsized_medium: BaseImageModel;
     downsized_small: DownsizedSmall;
-    downsized_still: Downsized;
+    downsized_still: BaseImageModel;
     fixed_height: FixedHeight;
     fixed_height_downsampled: FixedHeightDownsampled;
     fixed_height_small: FixedHeight;
-    fixed_height_small_still: Downsized;
-    fixed_height_still: Downsized;
+    fixed_height_small_still: BaseImageModel;
+    fixed_height_still: BaseImageModel;
     fixed_width: FixedHeight;
     fixed_width_downsampled: FixedHeightDownsampled;
     fixed_width_small: FixedHeight;
-    fixed_width_small_still: Downsized;
-    fixed_width_still: Downsized;
+    fixed_width_small_still: BaseImageModel;
+    fixed_width_still: BaseImageModel;
     looping: Looping;
-    original_still: Downsized;
+    original_still: BaseImageModel;
     original_mp4: DownsizedSmall;
     preview: DownsizedSmall;
-    preview_gif: Downsized;
-    preview_webp: Downsized;
-    "480w_still": Downsized;
+    preview_gif: BaseImageModel;
+    preview_webp: BaseImageModel;
+    "480w_still": BaseImageModel;
     hd?: DownsizedSmall;
     "4k"?: DownsizedSmall;
+    source: BaseImageModel,
 }
 
 interface Looping {
@@ -124,18 +138,14 @@ interface DownsizedSmall {
     mp4: string;
 }
 
-interface Downsized {
+interface BaseImageModel {
     height: string;
     width: string;
     size: string;
     url: string;
 }
 
-interface Original {
-    height: string;
-    width: string;
-    size: string;
-    url: string;
+interface Original extends BaseImageModel{
     mp4_size: string;
     mp4: string;
     webp_size: string;
