@@ -10,7 +10,6 @@
 
 .main-page {
     &__header {
-        align-items: center;
         background: @sky-blue;
         border-bottom: 2px solid @gray;
         display: flex;
@@ -21,8 +20,16 @@
     }
 
     &__controls {
+        align-items: center;
         display: flex;
         gap: @default-gap;
+        justify-content: space-between;
+        width: 100%;
+
+        &_fields {
+            display: flex;
+            gap: @default-gap;
+        }
 
         ::ng-deep .mat-mdc-form-field-bottom-align {
             height: 0;
@@ -48,5 +55,9 @@
         position: absolute;
         width: 100%;
         z-index: 1;
+    }
+
+    &__total-chip.mat-mdc-standard-chip {
+        --mdc-chip-elevated-container-color: #6866ff;
     }
 }

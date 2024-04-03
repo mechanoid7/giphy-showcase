@@ -20,6 +20,7 @@ interface State {
     page: number,
     images: GiphyImage[],
     loading?: boolean,
+    total?: number,
 }
 
 const initValues: Partial<State> = {
@@ -35,11 +36,19 @@ export class MainPageState extends RxState<State> {
         super();
         this.set(initValues);
 
+        this.connect("page", combineLatest([
+            this.select("searchValue"),
+            this.select("giphyContentType"),
+        ]).pipe(map(() => 0)));
+
         this.connect("images", combineLatest([
             this.select("searchValue"),
             this.select("giphyContentType"),
             this.select("page"),
         ]).pipe(
+            debounceTime(300),
+            tap(() => this.set({loading: true})),
+
             tap(() => {
                 console.log(">>> LOAD DATA");
             }),
@@ -49,7 +58,12 @@ export class MainPageState extends RxState<State> {
             //     return giphyService.getTrendingGifs(page);
             // }),
             // map(transformGiphyApiToImages),
+            tap(apiModel => this.set({total: getTotalItems(apiModel)})),
         ));
 
+    }
+
+    public loadNext() {
+        this.set({page: this.get("page") + 1});
     }
 }

@@ -18,6 +18,7 @@ import {
     ReactiveFormsModule,
 } from "@angular/forms";
 import {MatIconButton} from "@angular/material/button";
+import {MatChip} from "@angular/material/chips";
 import {
     MatFormField,
     MatLabel,
@@ -48,6 +49,7 @@ import {MainPageState} from "./main-page.state";
         AsyncPipe,
         FormsModule,
         GiphyListComponent,
+        MatChip,
         MatFormField,
         MatIcon,
         MatIconButton,
