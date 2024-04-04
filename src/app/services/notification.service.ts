@@ -28,8 +28,8 @@ export class NotificationService {
         this.openSnackBar(message, "", "success-snackbar");
     }
 
-    public error(message: string) {
-        this.openSnackBar(message, "", "error-snackbar");
+    public error(message: string, duration: number = 2500) {
+        this.openSnackBar(message, "", "error-snackbar", duration);
     }
 
     public confirmation(

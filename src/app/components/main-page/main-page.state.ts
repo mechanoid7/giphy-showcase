@@ -1,9 +1,12 @@
+import {HttpErrorResponse} from "@angular/common/http";
 import {Injectable} from "@angular/core";
 import {RxState} from "@rx-angular/state";
 import {
+    catchError,
     combineLatest,
     debounceTime,
     map,
+    of,
     switchMap,
     tap,
 } from "rxjs";
@@ -12,6 +15,7 @@ import {
     GiphyImage,
 } from "../../models/giphy.model";
 import {GiphyService} from "../../services/giphy.service";
+import {NotificationService} from "../../services/notification.service";
 import {
     getTotalItems,
     transformGiphyApiToImages,
@@ -35,7 +39,7 @@ const initValues: Partial<State> = {
 
 @Injectable()
 export class MainPageState extends RxState<State> {
-    constructor(giphyService: GiphyService) {
+    constructor(giphyService: GiphyService, notificationService: NotificationService) {
         super();
         this.set(initValues);
 
@@ -69,6 +73,11 @@ export class MainPageState extends RxState<State> {
                     ]
                     : transformGiphyApiToImages(apiModel)),
             tap(() => this.set({loading: false})),
+            catchError((err: HttpErrorResponse) => {
+                notificationService.error(`Can't fetch images: "${err.error?.meta?.msg || JSON.stringify(err.error)}". Please try again later`, 10000)
+                this.set({loading: false});
+                return of();
+            })
         ));
     }
 

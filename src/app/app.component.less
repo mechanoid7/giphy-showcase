@@ -1,4 +1,20 @@
+@import "../assets/styles/colors";
+
 :host {
     height: 100%;
     display: block;
+}
+
+::ng-deep {
+    &.blue-snackbar {
+        --mdc-snackbar-container-color: @sky-blue;
+    }
+
+    &.success-snackbar {
+        --mdc-snackbar-container-color: @success-green;
+    }
+
+    &.error-snackbar {
+        --mdc-snackbar-container-color: @error-red;
+    }
 }
